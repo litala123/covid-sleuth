@@ -1,5 +1,11 @@
-function login() {
-  alert("Login functionality hasn't been added yet! Try again later.");
+function login()
+{
+  location.href = "login.php";
+}
+
+function logout()
+{
+  location.href = "logout.php";
 }
 
 function location_display() {
