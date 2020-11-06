@@ -8,11 +8,11 @@
   
   <body>
     <!-- heading with the title and login button -->
-    <header>
+    <div>
       COVID-19 Tracker
       <button id="login" onclick="login()">Log in</button>
-    </header>
-    <section>
+    </div>
+    <section id="main">
       <aside id="left_sidebar">
         <button id="location_button" onclick="location_display()">Locations</button>
         <button id="hotspot_button" onclick="hotspot_display()">Hotspots</button>
@@ -30,6 +30,28 @@
       <!-- This will be filled with the map -->
       <aside id="map">
         <img width=100% height=100% src="res/map_placeholder_rpi.jpg" alt="Map Placeholder">
+      </aside>
+      
+      <aside id="right_sidebar">
+        <select id="loc_select">
+          <option value="cyan">Cyan - default</option>
+          <option value="red">Red</option>
+          <option value="orange">Orange</option>
+          <option value="yellow">Yellow</option>
+          <option value="green">Green</option>
+          <option value="blue">Blue</option>
+          <option value="purple">Purple</option>
+          <option value="pink">Pink</option>
+          <option value="blackwhite">Black/White</option>
+        </select>
+        <input type="time" name="entry_time"></input>
+        <input type="time" name="exit_time"></input>
+        <button id="input_data_button" onclick="">Add Location Data</button>
+        <section>
+          <p>Input location data via file upload</p>
+          <input type="file" id="input_data_button"></input>
+          <input type="submit"></input>
+        </section>
       </aside>
     </section>
     
