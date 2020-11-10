@@ -87,3 +87,8 @@ p {
   text-align: center;
   font-size: 2.5vh;
 }
+
+ul {
+  font-size: 2.5vh;
+  padding-inline-start: 3vw;
+}
