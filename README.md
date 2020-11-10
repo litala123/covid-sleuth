@@ -8,6 +8,11 @@ Below the header are the two primary elements: the location sidebar and the map 
 
 The map element is planned to take advantage of the Google Maps API, but currently has only a placeholder image of the RPI campus.
 
+##### RPI-CAS Login - Andrew L'Italien
+The login button has been linked to a page that will allow users to log into the site with their RCS-ID. This is done with PHP and the library phpCAS. Upon logging in, the login button will become the logout button, which will log out the user from the site. The RCS-ID of the user will be displayed in the header to the left of the logout button.
+Note: setting server certificates only seems to work when using absolute filepaths. The filepaths need to be relative to work for everyone, so the site currently has certificate validation turned off. This should be fixed.
+
+
 ##### Right sidebar and proportional sizes - Andrew L'Italien
 The right sidebar is added. This sidebar will be dedicated to inputting data to the database. It is 20% the width of the viewport, just as the life sidebar. The top of the new sidebar has a few different input options: a select option element for selecting a location (location options will be added once the database is implemented), two time input boxes (one for time entering the location and one for leaving), and a button to add the data to the database. The button currently does nothing.
 

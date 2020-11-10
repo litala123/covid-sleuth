@@ -26,7 +26,7 @@ body {
   padding: 1.4vh 2.8vh;
 }
 
-#left_sidebar {
+#sidebar {
   background-color: rgb(220, 220, 220);
   width: 20vw;
   height: 90vh;
@@ -91,4 +91,12 @@ p {
 ul {
   font-size: 2.5vh;
   padding-inline-start: 3vw;
+}
+
+#username {
+  font-size: 3.4vh;
+  font-style: normal;
+  float: right;
+  margin-right: 18.7vh;
+  margin-top: 2.1vh;
 }
