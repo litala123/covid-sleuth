@@ -1,19 +1,48 @@
-<!DOCTYPE html>
+<?php
+
+// phpCAS file
+include_once("res/phpCAS-1.3.6/CAS.php");
+
+phpCAS::setDebug(); 
+phpCAS::setVerbose(true);
+// create the client      authentication site, port (https), cas folder
+phpCAS::client(CAS_VERSION_2_0, "cas-auth.rpi.edu", 443, "/cas/");
+// set certifications
+// phpCAS::setCasServerCACert("res/cacert.pem");
+// line below keeps it from checking certifications
+phpCAS::setNoCasServerValidation();
+
+?>
+
 <html lang="en">
   <head>
     <title>COVID-19 Tracker</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="index.js" defer></script>
   </head>
   
   <body>
     <!-- heading with the title and login button -->
     <header>
       COVID-19 Tracker
-      <button id="login" onclick="login()">Log in</button>
+      
+      <?php
+      if (phpCAS::isAuthenticated())
+      {
+        // echo "User:" . phpCAS::getUser();
+        echo "<span id='username'>" . strtolower(phpCAS::getUser()) . "</span>";
+        echo "<button id='login' onclick='logout()'>Log Out</button>";
+      }
+      else
+      {
+        echo "<button id='login' onclick='login()'>Log In</button>";
+      }
+      ?>
     </header>
     <section>
-      <aside id="left_sidebar">
+      <aside id="sidebar">
         <button id="location_button" onclick="location_display()">Locations</button>
         <button id="hotspot_button" onclick="hotspot_display()">Hotspots</button>
         <button id="visited_button" onclick="visited_display()">Places You Visited</button>
@@ -33,6 +62,6 @@
       </aside>
     </section>
     
-    <script defer src="index.js"></script>
+    
   </body>
 </html>

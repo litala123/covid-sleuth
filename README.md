@@ -7,3 +7,7 @@ The homepage is created. There is a header that states in the top left, "COVID-1
 Below the header are the two primary elements: the location sidebar and the map element. The sidebar has three buttons: a button that will display all locations, one for all hotspot locations, and one for all places that the user has visited. Like the login button, clicking on them sends an alert to the user that they are not functional yet, although they do change to a light red to highlight which button has been pressed most-recently. There is a list under the buttons that has some placeholder location elements. The 3 buttons in the sidebar, once functional, will update this list.
 
 The map element is planned to take advantage of the Google Maps API, but currently has only a placeholder image of the RPI campus.
+
+##### RPI-CAS Login - Andrew L'Italien
+The login button has been linked to a page that will allow users to log into the site with their RCS-ID. This is done with PHP and the library phpCAS. Upon logging in, the login button will become the logout button, which will log out the user from the site. The RCS-ID of the user will be displayed in the header to the left of the logout button.
+Note: setting server certificates only seems to work when using absolute filepaths. The filepaths need to be relative to work for everyone, so the site currently has certificate validation turned off. This should be fixed.
