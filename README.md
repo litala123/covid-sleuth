@@ -19,3 +19,19 @@ The right sidebar is added. This sidebar will be dedicated to inputting data to 
 Much below the location input is an area dedicated to uploading location data with a file. There is a paragraph element that tells the user "Input location data via file upload." There is then a file upload button and a submit button for that file upload. Submitting currently does nothing.
 
 Not only for the right sidebar but the entire site, all style information in the stylesheet with pixel measurements have been changed to use vh and vw units, which are proportional to the size of the viewport. This allows the window to be resized without ruining the structure of the site. This also fixes a minor bug that caused the site to not fit perfectly on the screen and require slight scrolling.
+
+##### Created the database, left sidebar updates with location data - Andrew L'Italien
+A file called "initDB.php" was created that is included in the PHP script at the top of the homepage. This file creates a database called "covid_db" if there is not already a database with that name. It will then create 3 tables (if they don't already exist) in that database: "locations" (will store all locations on RPI), "hotspots" (will store the IDs of locations that are hotspots), and "locations_visited" (will store the locations that each user has visited).
+
+The "initDB.php" file also checks if the "locations" table is empty. If it is empty, it will fill it with locations at RPI. The SQL querying is done in a file ("fillLocations.php") that is included in the "initDB.php" file. The locations currently in the "fillLocations.php" file are placeholders. There are also temporary INSERTs in this file for the "locations_visited" table for testing.
+
+The homepage has an element with #locs_from_db whose text is filled with the locations stored in the "locations" table. These are taken from the database with an SQL query and put into a string formatted as a JSON object with an array of the location which will get echoed into the HTML element. The element has "display" set to "none" to keep the homepage layout uninterrupted. Clicking on the "Locations" button on the left sidebar will clear the list of locations in the left sidebar and fill it with the locations taken from the database. This is done by parsing the JSON-formatted string to get an array of locations and appending &lt;li&gt;s with those locations into the list.
+Similar elements have been added for the "hotspots" and "locations_visited tables" (with IDs #hotspots_from_db and #visited_from_db, respectively). The element for hotspots pulls locations from the "locations" table based on what locationIDs are stored in the "hotspots" table. The locations-visited element pulls all rows from the "locations_visited" table that correspond to the user that is currently logged into the website. The locations and the times the user was at those locations will be displayed in this list. Not being logged-in results in an empty list for locations visited.
+Upon first loading the page, all locations will be listed.
+
+In the right sidebar, the input for selecting a location now pulls its options from the database. All locations are pulled from the locations table, and each option is created by echoing an &lt;option&gt; tag for each location.
+
+Minor changes:
+- The "Places You Visited" button now says, "Locations Visited" instead.
+- The "time" inputs have been changed to "datetime-local" inputs so that both date and time can be inputted instead of just the time.
+- The location list no longer uses bullet points.
