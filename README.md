@@ -35,3 +35,8 @@ Minor changes:
 - The "Places You Visited" button now says, "Locations Visited" instead.
 - The "time" inputs have been changed to "datetime-local" inputs so that both date and time can be inputted instead of just the time.
 - The location list no longer uses bullet points.
+
+##### Input form adds location info to database - Andrew L'Italien
+The input boxes in the top of the right sidebar can now be used to add location data to the database. In order to upload data, a user must be logged in, all boxes must be filled in, and the entry date and time cannot be later than the exit date and time. If any of these requirements are not done, the user will receive an alert telling them. If the data is successfully added, the user will receive an alert saying so. Hitting the "Add Location" button posts the selected location and inputted dates and times and will add them to the locations_visited table with the user's RCS-ID. No repeat entries are allowed (info will not be added to the database if there is already a row with the same user, location, dates, and times).
+
+The inputs for dates and times used to be 2 inputs of type="datetime-local" for entry and exit information, but that type of input is not supported in Firefox on the desktop. Both of those inputs were split into 2 separate input elements for date and time for browser compatibility.

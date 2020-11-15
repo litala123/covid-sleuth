@@ -35,6 +35,8 @@ try {
     id INT(9) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     locationID INT(6) UNSIGNED NOT NULL,
     rcsID VARCHAR(9) NOT NULL,
+    entryDate VARCHAR(20) NOT NULL,
+    exitDate VARCHAR(20) NOT NULL,
     entryTime VARCHAR(20) NOT NULL,
     exitTime VARCHAR(20) NOT NULL
   )";
