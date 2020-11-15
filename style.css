@@ -1,4 +1,4 @@
-div {
+#header {
   font-size: 7vh;
   background-color: rgb(197, 197, 197);
   padding: 1.1vh;
@@ -91,6 +91,7 @@ p {
 ul {
   font-size: 2.5vh;
   padding-inline-start: 3vw;
+  list-style-type: none;
 }
 
 #username {
@@ -99,4 +100,16 @@ ul {
   float: right;
   margin-right: 18.7vh;
   margin-top: 2.1vh;
+}
+
+#locs_from_db {
+  display: none;
+}
+
+#hotspots_from_db {
+  display: none;
+}
+
+#visited_from_db {
+  display: none;
 }
