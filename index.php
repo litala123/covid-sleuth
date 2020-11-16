@@ -30,6 +30,10 @@ include("initDB.php");
     <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="index.js" defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMewe8_kbhPAxh7Lnexd6VrtGT3N_-R3Y&callback=initMap&libraries=&v=weekly"
+      defer
+    ></script>
   </head>
   
   <body>
@@ -60,9 +64,7 @@ include("initDB.php");
       </aside>
       
       <!-- This will be filled with the map -->
-      <aside id="map">
-        <img width=100% height=100% src="res/map_placeholder_rpi.jpg" alt="Map Placeholder">
-      </aside>
+      <div id="map"></div>
       
       <aside id="right_sidebar">
         <select id="loc_select">
