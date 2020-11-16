@@ -21,6 +21,72 @@ phpCAS::setNoCasServerValidation();
 
 include("initDB.php");
 
+
+// function used that returns TRUE if date/time 1 is earlier than date/time 2
+function checkDateTimeValid($entryDate, $exitDate, $entryTime, $exitTime) {
+  
+  $entry = strtotime("$entryDate $entryTime");
+  $exit = strtotime("$exitDate $exitTime");
+  if(strtotime("$exitDate $exitTime") - strtotime("$entryDate $entryTime") >= 0) {
+    return TRUE;
+  } else {
+    return FALSE;
+  }
+}
+
+
+// INPUT HANDLING
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+  // makes sure that the inputs in the sidebar were all filled in when submit was pressed
+  if(isset($_POST['entry_date']) && isset($_POST['exit_date']) && isset($_POST['entry_time']) && isset($_POST['exit_time']) && $_POST['entry_date'] != "" && $_POST['exit_date'] != "" && $_POST['entry_time'] != "" && $_POST['exit_time'] != "") {
+    
+    if(checkDateTimeValid($_POST['entry_date'], $_POST['exit_date'], $_POST['entry_time'], $_POST['exit_time'])) {
+      
+      // makes sure the user is logged in before trying to add anything to the table
+      if (phpCAS::isAuthenticated()) {
+        
+        $user = strtolower(phpCAS::getUser());
+        $locName = $_POST['loc_select'];
+        $result = $dbconn->query("SELECT * FROM locations WHERE locationName='$locName'");
+        $locID = $result->fetch();
+        
+        // string containing the information that the user is trying to add
+        $loc_data = "(locationID, rcsID, entryDate, exitDate, entryTime, exitTime) VALUES (" . $locID['id'] . ", '$user', '" . $_POST['entry_date'] . "', '" . $_POST['exit_date'] . "', '" . $_POST['entry_time'] . "', '" . $_POST['exit_time'] . "')";
+        
+        // gets all rows that have the same values as the one trying to be added
+        $sql = "SELECT * FROM locations_visited WHERE locationID=" . $locID['id'] . " AND rcsID='$user' AND entryDate='" . $_POST['entry_date'] . "' AND exitDate='" . $_POST['exit_date'] . "' AND entryTime='" . $_POST['entry_time'] . "' AND exitTime='" . $_POST['exit_time'] . "'";
+        $result = $dbconn->query($sql);
+        
+        // if the result isn't in the table already, add it
+        if(count($result->fetchAll()) == 0) {
+          $sql = "INSERT INTO locations_visited $loc_data";
+          $dbconn->query($sql);
+          // echo "Logged in: added data<br>";
+          echo "<script>alert('Added data');</script>";
+        } else {
+          // echo "Result already in the table<br>";
+          // echo "<script>alert('Result already in the table');</script>";
+        }
+        
+      } else {
+        // the user wasn't logged in, so the data will not be added
+        // echo "Not logged in: did not add data<br>";
+        echo "<script>alert('Must be logged in to add data');</script>";
+      }
+    } else {
+      // the date/time for exit was before the entry date/time
+      echo "<script>alert('Entry cannot be after exit');</script>";
+    }
+    
+  } else {
+    // the inputs were not all filled
+    //echo "Not all inputs set (:{()>";
+    echo "<script>alert('Not all inputs set');</script>";
+  }
+
+}
+
 ?>
 
 <html lang="en">
@@ -41,15 +107,12 @@ include("initDB.php");
     <div id="header">
       COVID-19 Tracker
       <?php
-      if (phpCAS::isAuthenticated())
-      {
+      if (phpCAS::isAuthenticated()) {
         // echo "User:" . phpCAS::getUser();
         $user = strtolower(phpCAS::getUser());
         echo "<span id='username'>" . $user . "</span>";
         echo "<button id='login' onclick='logout()'>Log Out</button>";
-      }
-      else
-      {
+      } else {
         echo "<button id='login' onclick='login()'>Log In</button>";
       }
       ?>
@@ -67,25 +130,31 @@ include("initDB.php");
       <div id="map"></div>
       
       <aside id="right_sidebar">
-        <select id="loc_select">
-          <!-- Add PHP here to loop through all locations and echo the option values -->
-          <?php
-            $rows = $dbconn->query("SELECT * FROM locations");
-            $count = 0;
-            foreach($rows as $row) {
-              $loc = $row['locationName'];
-              echo "<option value=\"$loc\">$loc</option>";
-              $count++;
-            }
-          ?>
-        </select>
-        <input type="datetime-local" name="entry_time"></input>
-        <input type="datetime-local" name="exit_time"></input>
-        <button id="input_data_button" onclick="">Add Location Data</button>
+        <form id="data_form" method="post" action="index.php">
+          <select id="loc_select" name="loc_select">
+            <!-- Add PHP here to loop through all locations and echo the option values -->
+            <?php
+              $rows = $dbconn->query("SELECT * FROM locations");
+              $count = 0;
+              foreach($rows as $row) {
+                $loc = $row['locationName'];
+                echo "<option value=\"$loc\">$loc</option>";
+                $count++;
+              }
+            ?>
+          </select>
+          <input type="date" name="entry_date"></input>
+          <input type="time" name="entry_time"></input>
+          <input type="date" name="exit_date"></input>
+          <input type="time" name="exit_time"></input>
+          <button id="input_data_button" onclick="">Add Location Data</button>
+        </form>
         <section>
-          <p>Input location data via file upload</p>
-          <input type="file" id="input_data_button"></input>
-          <input type="submit"></input>
+          <form>
+            <p>Input location data via file upload</p>
+            <input type="file" id="input_data_button"></input>
+            <input type="submit"></input>
+          </form>
         </section>
       </aside>
     </section>
