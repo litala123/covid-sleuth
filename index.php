@@ -91,9 +91,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <html lang="en">
   <head>
-    <title>COVID-19 Tracker</title>
+    <title>COVID Sleuth</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="res/icon3.png">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="index.js" defer></script>
     <script
@@ -105,7 +106,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   <body>
     <!-- heading with the title and login button -->
     <div id="header">
-      COVID-19 Tracker
+      <img src="res/icon3.png"></img>
+      COVID Sleuth
       <?php
       if (phpCAS::isAuthenticated()) {
         // echo "User:" . phpCAS::getUser();
@@ -147,13 +149,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
           <input type="time" name="entry_time"></input>
           <input type="date" name="exit_date"></input>
           <input type="time" name="exit_time"></input>
-          <button id="input_data_button" onclick="">Add Location Data</button>
+          <button class="rightBtn" id="input_data_button" onclick="">Add Location Data</button>
         </form>
+        
+        <?php
+          if (phpCAS::isAuthenticated())
+          {
+            echo "<button id=\"covid_btn\">I have COVID-19</button>";
+          }
+        ?>
+        
         <section>
           <form>
             <p>Input location data via file upload</p>
-            <input type="file" id="input_data_button"></input>
-            <input type="submit"></input>
+            <input type="file" id="input_file_button"></input>
+            <input class="rightBtn" type="submit"></input>
           </form>
         </section>
       </aside>
@@ -168,12 +178,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $count = 0;
         foreach($rows as $row) {
           if($count == 0)
-            $locs = $locs . " \"" . $row['locationName'];
+            $locs = $locs . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           else
-            $locs = $locs . "\", " . " \"" . $row['locationName'];
+            $locs = $locs . "], [" . " \"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           $count++;
         }
-        $locs = $locs . "\" ] }";
+        $locs = $locs . " ] ]}";
         echo $locs;
       ?>
     </div>
@@ -189,12 +199,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $count = 0;
         foreach($rows as $row) {
           if($count == 0)
-            $locs = $locs . " \"" . $row['locationName'];
+            $locs = $locs . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           else
-            $locs = $locs . "\", " . " \"" . $row['locationName'];
+            $locs = $locs . "], [" . " \"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           $count++;
         }
-        $locs = $locs . "\" ] }";
+        $locs = $locs . " ] ]}";
         echo $locs;
       ?>
     </div>
@@ -215,9 +225,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $count = 0;
         foreach($times as $time) {
           if($count == 0)
-            $locs = $locs . " [\"" . $time['entryTime'] . "\", \"" . $time['exitTime'] . "\"]";
+            $locs = $locs . " [\"" . $time['entryDate'] . ": " . $time['entryTime'] . "\", \"" . $time['exitDate'] . ": " . $time['exitTime'] . "\"]";
           else
-            $locs = $locs . ", " . " [\"" . $time['entryTime'] . "\", \"" . $time['exitTime'] . "\"]";
+            $locs = $locs . ", " . " [\"" . $time['entryDate'] . ": " . $time['entryTime'] . "\", \"" . $time['exitDate'] . ": " . $time['exitTime'] . "\"]";
           $count++;
         }
         $locs = $locs . " ], ";
@@ -227,12 +237,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $count = 0;
         foreach($rows as $row) {
           if($count == 0)
-            $locs = $locs . " \"" . $row['locationName'];
+            $locs = $locs . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           else
-            $locs = $locs . "\", " . " \"" . $row['locationName'];
+            $locs = $locs . "], " . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
           $count++;
         }
-        $locs = $locs . "\" ] }";
+        $locs = $locs . "] ] }";
         echo $locs;
       ?>
     </div>

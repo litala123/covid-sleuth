@@ -40,3 +40,15 @@ Minor changes:
 The input boxes in the top of the right sidebar can now be used to add location data to the database. In order to upload data, a user must be logged in, all boxes must be filled in, and the entry date and time cannot be later than the exit date and time. If any of these requirements are not done, the user will receive an alert telling them. If the data is successfully added, the user will receive an alert saying so. Hitting the "Add Location" button posts the selected location and inputted dates and times and will add them to the locations_visited table with the user's RCS-ID. No repeat entries are allowed (info will not be added to the database if there is already a row with the same user, location, dates, and times).
 
 The inputs for dates and times used to be 2 inputs of type="datetime-local" for entry and exit information, but that type of input is not supported in Firefox on the desktop. Both of those inputs were split into 2 separate input elements for date and time for browser compatibility.
+
+##### UI mini overhaul, RPI locations, extra map usage - Andrew L'Italien
+The header is now red. Buttons have rounded corners, and the red/pink highlights on clicked buttons are darker. The RCS-ID now has a black border and has a gray background to keep it readable against the red. The website title and the header text now say "COVID Sleuth" instead of the generic "COVID-19 Tracker" that it had before. A logo has been placed before the header text; that logo is also used as the website icon, seen in the tab at the top of the screen.
+There is a big "I have COVID-19" button in the right sidebar that currently does nothing. It is only visible when a user is logged in.
+
+The list of locations has been updated to reflect locations actually at RPI. The list in the left sidebar is scrollable so the entrees do not extend beyond the page. Each location has a higher margin on the bottom to space them out better.
+Clicking on one of these locations will bring you to that location on the map.
+
+Minor changes:
+- The longitude and latitude column orders have been switched in the locations table for convenience. Longitude was displayed first, but this changed because latitude is typically displayed before longitude, so this change makes it easier to read in the table.
+- Changed mouse icon to pointer when hovering over listed locations on the left
+- Changed font family to "serif"

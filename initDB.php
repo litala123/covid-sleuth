@@ -21,8 +21,8 @@ try {
   $sql = "CREATE TABLE IF NOT EXISTS locations (
     id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     locationName VARCHAR(100) NOT NULL,
-    longitude DOUBLE NOT NULL,
-    latitude DOUBLE NOT NULL
+    latitude DOUBLE NOT NULL,
+    longitude DOUBLE NOT NULL
   )";
   $dbconn->exec($sql);
   

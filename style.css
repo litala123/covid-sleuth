@@ -1,14 +1,21 @@
 #header {
   font-size: 7vh;
-  background-color: rgb(197, 197, 197);
+  background-color: rgb(238, 37, 37);
   padding: 1.1vh;
   font-style: italic;
-  height: 10vh;
+  height: 7.8vh;
+  font-weight: bold;
+}
+
+img {
+  width: 5vh;
+  height: 5vh;
 }
 
 body {
   margin: 0vh;
   height: 100vh;
+  font-family: sans-serif;
 }
 
 #main {
@@ -24,6 +31,7 @@ body {
   right: 1.8vh;
   font-size: 2.8vh;
   padding: 1.4vh 2.8vh;
+  border-radius: 6px;
 }
 
 #left_sidebar {
@@ -32,12 +40,14 @@ body {
   height: 90vh;
   list-style-position: inside;
   float: left;
+  overflow-y: auto;
 }
 
 #left_sidebar button {
   margin-left: 1.1vh;
   margin-top: 1.1vh;
   font-size: 2.5vh;
+  border-radius: 4px;
 }
 
 #map {
@@ -52,14 +62,25 @@ body {
   width: 20vw;
   height: 90vh;
   float: right;
+  font-size: 2.4vh;
 }
 
-#right_sidebar button {
+.rightBtn {
   margin-left: 1.1vh;
   margin-top: 1.1vh;
   font-size: 2.5vh;
+  border-radius: 3px;
+  width: 55%;
 }
 
+#input_file_button {
+  border: solid rgb(104, 104, 104) 2px;
+  border-radius: 3px;
+  margin-top: 1.1vh;
+  margin-left: 1.1vh;
+  max-width: 90%;
+  font-size: 2.4vh;
+}
 
 #loc_select {
   width: 19vw;
@@ -68,15 +89,32 @@ body {
   font-size: 2.5vh;
 }
 
-#right_sidebar input {
+[name="entry_date"], [name="exit_date"] {
   margin-top: 1.1vh;
   margin-left: 1.1vh;
-  max-width: 95%;
-  font-size: 2.26vh;
+  max-width: 55%;
+  font-size: 2.4vh;
+}
+
+[name="entry_time"], [name="exit_time"] {
+  max-width: 46%;
+  font-size: 2.4vh;
+  margin-left: 0vh;
+}
+
+#covid_btn {
+  margin-left: 1.1vh;
+  position: relative;
+  top: 25vh;
+  font-size: 2vw;
+  background-color: #ff6666;
+  border-radius: 6px;
+  width: 95%;
 }
 
 #right_sidebar section {
-  margin-top: 35vh;
+  position: relative;
+  top: 37vh;
   border-top: solid #777777 0.275vh;
   padding: 1.1vh;
 }
@@ -89,16 +127,29 @@ p {
 
 ul {
   font-size: 2.5vh;
-  padding-inline-start: 3vw;
+  padding-inline-start: 1.8vw;
   list-style-type: none;
+}
+
+li {
+  margin-bottom: 0.75vh;
+}
+
+li:hover {
+  background-color: rgb(187, 187, 187);
+  cursor: pointer;
 }
 
 #username {
   font-size: 3.4vh;
   font-style: normal;
+  font-weight: bold;
   float: right;
-  margin-right: 18.7vh;
-  margin-top: 2.1vh;
+  margin-right: 20vh;
+  margin-top: 1.38vh;
+  padding: 0.55vh 1.4vh;
+  border: solid black 0.275vh;
+  background-color: #e7e7e7;
 }
 
 #locs_from_db {
@@ -111,4 +162,8 @@ ul {
 
 #visited_from_db {
   display: none;
+}
+
+.loc_time {
+  font-size: 75%;
 }
