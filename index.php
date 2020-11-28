@@ -212,37 +212,26 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     <div id="visited_from_db">
       <!-- Location from locations table will be echoed here so they can be accessed by JS
            This element has display set to none so that it doesn't affect the layout -->
+      
       <?php
-        $sql = "SELECT * FROM locations WHERE id IN (
-          SELECT locationID FROM locations_visited WHERE rcsID='$user'
-        )";
+        $sql = "SELECT * FROM locations_visited JOIN locations ON locations_visited.locationId=locations.id ORDER BY `entryDate` DESC, `entryTime` DESC";
         $rows = $dbconn->query($sql);
         
-        $sql = "SELECT * FROM locations_visited WHERE rcsID='$user'";
-        $times = $dbconn->query($sql);
+        /*
+            JSON format:
+            { "arr": [ ["loc_name", "loc_lat", "loc_long", "loc_entr", "loc_exit"], ["loc_name", "loc_lat", "loc_long", "loc_entr", "loc_exit"] ] }
+        */
         
-        $locs = "{ \"t_arr\": [ ";
-        $count = 0;
-        foreach($times as $time) {
-          if($count == 0)
-            $locs = $locs . " [\"" . $time['entryDate'] . ": " . $time['entryTime'] . "\", \"" . $time['exitDate'] . ": " . $time['exitTime'] . "\"]";
-          else
-            $locs = $locs . ", " . " [\"" . $time['entryDate'] . ": " . $time['entryTime'] . "\", \"" . $time['exitDate'] . ": " . $time['exitTime'] . "\"]";
-          $count++;
-        }
-        $locs = $locs . " ], ";
-        echo $locs;
-        
-        $locs = "\"l_arr\": [ ";
+        $locs = "{ \"arr\": [ ";
         $count = 0;
         foreach($rows as $row) {
-          if($count == 0)
-            $locs = $locs . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
-          else
-            $locs = $locs . "], " . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'];
+          if($count != 0)
+            $locs = $locs . ", ";
+          $locs = $locs . " [\"" . $row['locationName'] . "\", " . $row['latitude'] . ", " . $row['longitude'] . ", \"" . $row['entryDate'] . ": " . $row['entryTime'] . "\", \"" . $row['exitDate'] . ": " . $row['exitTime'] . "\"]";
           $count++;
         }
-        $locs = $locs . "] ] }";
+        $locs = $locs . " ] }";
+        
         echo $locs;
       ?>
     </div>

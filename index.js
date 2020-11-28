@@ -56,24 +56,29 @@ function visited_display() {
   $("#loc_list").empty();
   
   var locs = JSON.parse($("#visited_from_db").text());
-  // console.log("V: " + locs.l_arr);
-  // console.log("V: " + locs.t_arr);
-  for(var i = 0; i < locs.l_arr.length; i++) {
+  for(var i = 0; i < locs.arr.length; i++) {
     // ex. turn 2020-11-14 into 2020/11/14
     // does this for entry an exit dates
-    locs.t_arr[i][0] = locs.t_arr[i][0].replace("-", "/");
-    locs.t_arr[i][0] = locs.t_arr[i][0].replace("-", "/");
-    locs.t_arr[i][1] = locs.t_arr[i][1].replace("-", "/");
-    locs.t_arr[i][1] = locs.t_arr[i][1].replace("-", "/");
     
-    if(locs.t_arr[i][0].substring(0, 10) == locs.t_arr[i][1].substring(0, 10))
+    console.log("arr[0]: " + locs.arr[0][0]);
+    console.log("arr[1]: " + locs.arr[0][1]);
+    console.log("arr[2]: " + locs.arr[0][2]);
+    console.log("arr[3]: " + locs.arr[0][3]);
+    console.log("arr[4]: " + locs.arr[0][4]);
+    
+    locs.arr[i][3] = locs.arr[i][3].replace("-", "/");
+    locs.arr[i][3] = locs.arr[i][3].replace("-", "/");
+    locs.arr[i][4] = locs.arr[i][4].replace("-", "/");
+    locs.arr[i][4] = locs.arr[i][4].replace("-", "/");
+    
+    if(locs.arr[i][3].substring(0, 10) == locs.arr[i][4].substring(0, 10))
     {
-      locstr = "<li id=" + locs.l_arr[i][1].toString() + locs.l_arr[i][2].toString() + ">" + locs.l_arr[i][0] + "<br><div class=loc_time>("  + locs.t_arr[i][0].substring(5) + "–" + locs.t_arr[i][1].substring(12) + ")</div></li>"
+      locstr = "<li id=" + locs.arr[i][1].toString() + locs.arr[i][2].toString() + ">" + locs.arr[i][0] + "<br><div class=loc_time>("  + locs.arr[i][3].substring(5) + "–" + locs.arr[i][4].substring(12) + ")</div></li>"
       //alert(locstr);
     }
     else
     {
-      locstr = "<li id=" + locs.l_arr[i][1].toString() + locs.l_arr[i][2].toString() + ">" + locs.l_arr[i][0] + "<br><div class=loc_time>("  + locs.t_arr[i][0].substring(5) + " – " + locs.t_arr[i][1].substring(5) + ")</div></li>"
+      locstr = "<li id=" + locs.arr[i][1].toString() + locs.arr[i][2].toString() + ">" + locs.arr[i][0] + "<br><div class=loc_time>("  + locs.arr[i][3].substring(5) + " – " + locs.arr[i][4].substring(5) + ")</div></li>"
       //alert(locstr);
     }
     $("#loc_list").append(locstr);
