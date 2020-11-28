@@ -52,3 +52,7 @@ Minor changes:
 - The longitude and latitude column orders have been switched in the locations table for convenience. Longitude was displayed first, but this changed because latitude is typically displayed before longitude, so this change makes it easier to read in the table.
 - Changed mouse icon to pointer when hovering over listed locations on the left
 - Changed font family to "serif"
+
+##### Locations visited list fixed - Andrew L'Italien
+The locations visited list pulled data from the database in a way that made it so no location could appear more than once in the list. The SQL query has been rewritten to fix this issue. Also, the visits are now listed by entry date/time from most recent to longest ago.
+Also, the code was pretty inefficient before, making multiple SQL queries, creating two different arrays for data, and then using both of those in the JS file. The code has now been shortened to include on 1 SQL query, 1 array, and is now much more readable.
