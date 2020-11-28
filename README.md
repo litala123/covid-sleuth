@@ -48,4 +48,7 @@ There is a big "I have COVID-19" button in the right sidebar that currently does
 The list of locations has been updated to reflect locations actually at RPI. The list in the left sidebar is scrollable so the entrees do not extend beyond the page. Each location has a higher margin on the bottom to space them out better.
 Clicking on one of these locations will bring you to that location on the map.
 
-The longitude and latitude column orders have been switched in the locations table for convenience. Longitude was displayed first, but this changed because latitude is typically displayed before longitude, so this change makes it easier to read in the table.
+Minor changes:
+- The longitude and latitude column orders have been switched in the locations table for convenience. Longitude was displayed first, but this changed because latitude is typically displayed before longitude, so this change makes it easier to read in the table.
+- Changed mouse icon to pointer when hovering over listed locations on the left
+- Changed font family to "serif"

@@ -15,6 +15,7 @@ img {
 body {
   margin: 0vh;
   height: 100vh;
+  font-family: sans-serif;
 }
 
 #main {
@@ -136,6 +137,7 @@ li {
 
 li:hover {
   background-color: rgb(187, 187, 187);
+  cursor: pointer;
 }
 
 #username {
