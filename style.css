@@ -112,9 +112,19 @@ body {
   width: 95%;
 }
 
+#covid_sure {
+  margin-left: 1.1vh;
+  position: relative;
+  top: 27vh;
+  font-size: 2vw;
+  background-color: #ff6666;
+  border-radius: 6px;
+  width: 95%;
+}
+
 #right_sidebar section {
   position: relative;
-  top: 37vh;
+  top: 30vh;
   border-top: solid #777777 0.275vh;
   padding: 1.1vh;
 }

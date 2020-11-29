@@ -56,3 +56,10 @@ Minor changes:
 ##### Locations visited list fixed - Andrew L'Italien
 The locations visited list pulled data from the database in a way that made it so no location could appear more than once in the list. The SQL query has been rewritten to fix this issue. Also, the visits are now listed by entry date/time from most recent to longest ago.
 Also, the code was pretty inefficient before, making multiple SQL queries, creating two different arrays for data, and then using both of those in the JS file. The code has now been shortened to include on 1 SQL query, 1 array, and is now much more readable.
+
+##### Users can claim they have COVID-19 - Andrew L'Italien
+Upon clicking the "I have COVID-19" button, a new "Yes" button will appear below it. Upon clicking the "Yes" button, the site will email all users that have been to any location with the past 24 hours that the current user has been to within the last 24 hours. Also, all of the locations the current user has been to within the last 24 hours will be marked as hotspots.
+
+The email is done with PHP with a Mail package installed with PEAR. The SMTP used is 'smtp.gmail.com', and 'covidsleuth.alert@gmail.com' is the email address that sends out emails to users. Using 'gmail.com' instead of 'rpi.edu' may result in some users' spam filters to mark the alerts as spam, but that is user dependent. My email filter is able to receive emails from 'gmail.com' addresses, but they don't always send right away, so I had to whitelist the accounts to prevent emails from being put on hold.
+
+Also added more INSERT queries in "fillLocations.php" for testing.
