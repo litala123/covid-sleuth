@@ -185,7 +185,43 @@ $dbconn->exec($sql);
 $sql = "INSERT INTO locations_visited (locationID, rcsID, entryDate, exitDate, entryTime, exitTime) VALUES (2, 'litala', '2020-11-12', '2020-11-12', '5:00', '5:05')";
 $dbconn->exec($sql);
 
-$sql = "INSERT INTO locations_visited (locationID, rcsID, entryDate, exitDate, entryTime, exitTime) VALUES (4, 'smithj2', '2020-11-14', '2020-11-14', '7:00', '8:30')";
+$sql = "INSERT INTO locations_visited (locationID, rcsID, entryDate, exitDate, entryTime, exitTime) VALUES (4, 'litala', '2020-11-14', '2020-11-14', '7:00', '8:30')";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'litala', '2020-11-28', '2020-11-28', '5:00', '5:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (1, 'litala', '2020-11-28', '2020-11-28', '5:00', '5:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'karakt', '2020-11-12', '2020-11-12', '5:00', '5:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (17, 'karakt', '2020-11-28', '2020-11-28', '6:00', '6:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (4, 'greent4', '2020-11-27', '2020-11-27', '7:00', '7:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'felloa', '2020-11-27', '2020-11-27', '3:00', '5:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'nambis', '2020-11-28', '2020-11-28', '14:00', '14:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (4, 'greent4', '2020-11-28', '2020-11-28', '12:00', '15:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (4, 'greent4', '2020-11-28', '2020-11-28', '21:00', '23:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'nambis', '2020-11-26', '2020-11-26', '1:00', '16:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'felloa', '2020-11-27', '2020-11-27', '16:00', '17:05');";
+$dbconn->exec($sql);
+
+$sql = "INSERT INTO `locations_visited`(`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES (7, 'karakt', '2020-11-27', '2020-11-27', '17:00', '22:05');";
 $dbconn->exec($sql);
 
 ?>
