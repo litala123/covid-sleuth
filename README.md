@@ -63,3 +63,8 @@ Upon clicking the "I have COVID-19" button, a new "Yes" button will appear below
 The email is done with PHP with a Mail package installed with PEAR. The SMTP used is 'smtp.gmail.com', and 'covidsleuth.alert@gmail.com' is the email address that sends out emails to users. Using 'gmail.com' instead of 'rpi.edu' may result in some users' spam filters to mark the alerts as spam, but that is user dependent. My email filter is able to receive emails from 'gmail.com' addresses, but they don't always send right away, so I had to whitelist the accounts to prevent emails from being put on hold.
 
 Also added more INSERT queries in "fillLocations.php" for testing.
+
+##### Updated logo to be clickable - Tyler Green
+Made the logo clickable...Minor update, but may help in future.
+
+
