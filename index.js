@@ -79,7 +79,7 @@ function visited_display() {
 }
 
 $("#covid_btn").click( function() {
-  $("#covid_form").append("<button name=\"covid_sure\" id=\"covid_sure\">Yes</button>")
+  $("#covid_form").append("<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>")
   $("#covid_sure").click( function() {
     alert("All people at risk are being notified.");
   });

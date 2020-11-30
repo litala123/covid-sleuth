@@ -67,4 +67,11 @@ Also added more INSERT queries in "fillLocations.php" for testing.
 ##### Updated logo to be clickable - Tyler Green
 Made the logo clickable...Minor update, but may help in future.
 
+##### Locations visited can be added via file upload - Andrew L'Italien
+The file upload section of the right sidebar is now functional. Locations visited data from a JSON file can be added to the database's "locations_visited" table for the current user. The file must be a JSON file. An example of formatting can be found in the file called "upload.json" is in the "res" folder. The code is written so that location history downloaded from Google (holding location data for people using Google Maps) can be uploaded. If no locations are found in the uploaded file, then user will be alerted. Locations should be ordered by "timestampMs" from smallest to largest value (the location history file from Google does this automatically).
 
+*How it works:*
+Essentially, the JSON is parsed into an array, and the latitudes and longitudes are used to check each location against each RPI location in the database (doesn't have to be exact, just close). Locations from the file that are matched with an RPI location are put into another array. Consecutive elements in that array with the same location will be consolidated into one location with the start and end times of the whole range. The final adjusted locations are then inserted into the locations_visited table for the current user.
+
+Other minor change:
+- The "Yes" button for confirming that the user has COVID-19 now has the text "Confirm" instead.
