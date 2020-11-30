@@ -286,7 +286,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
   <body>
     <!-- heading with the title and login button -->
     <div id="header">
-      <img src="res/icon3.png"></img>
+    <a href="/"><img src="res/icon3.png"></img></a>
       COVID Sleuth
       <?php
       if (phpCAS::isAuthenticated()) {

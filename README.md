@@ -64,6 +64,9 @@ The email is done with PHP with a Mail package installed with PEAR. The SMTP use
 
 Also added more INSERT queries in "fillLocations.php" for testing.
 
+##### Updated logo to be clickable - Tyler Green
+Made the logo clickable...Minor update, but may help in future.
+
 ##### Locations visited can be added via file upload - Andrew L'Italien
 The file upload section of the right sidebar is now functional. Locations visited data from a JSON file can be added to the database's "locations_visited" table for the current user. The file must be a JSON file. An example of formatting can be found in the file called "upload.json" is in the "res" folder. The code is written so that location history downloaded from Google (holding location data for people using Google Maps) can be uploaded. If no locations are found in the uploaded file, then user will be alerted. Locations should be ordered by "timestampMs" from smallest to largest value (the location history file from Google does this automatically).
 
