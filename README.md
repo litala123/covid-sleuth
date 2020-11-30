@@ -63,3 +63,12 @@ Upon clicking the "I have COVID-19" button, a new "Yes" button will appear below
 The email is done with PHP with a Mail package installed with PEAR. The SMTP used is 'smtp.gmail.com', and 'covidsleuth.alert@gmail.com' is the email address that sends out emails to users. Using 'gmail.com' instead of 'rpi.edu' may result in some users' spam filters to mark the alerts as spam, but that is user dependent. My email filter is able to receive emails from 'gmail.com' addresses, but they don't always send right away, so I had to whitelist the accounts to prevent emails from being put on hold.
 
 Also added more INSERT queries in "fillLocations.php" for testing.
+
+##### Locations visited can be added via file upload - Andrew L'Italien
+The file upload section of the right sidebar is now functional. Locations visited data from a JSON file can be added to the database's "locations_visited" table for the current user. The file must be a JSON file. An example of formatting can be found in the file called "upload.json" is in the "res" folder. The code is written so that location history downloaded from Google (holding location data for people using Google Maps) can be uploaded. If no locations are found in the uploaded file, then user will be alerted. Locations should be ordered by "timestampMs" from smallest to largest value (the location history file from Google does this automatically).
+
+*How it works:*
+Essentially, the JSON is parsed into an array, and the latitudes and longitudes are used to check each location against each RPI location in the database (doesn't have to be exact, just close). Locations from the file that are matched with an RPI location are put into another array. Consecutive elements in that array with the same location will be consolidated into one location with the start and end times of the whole range. The final adjusted locations are then inserted into the locations_visited table for the current user.
+
+Other minor change:
+- The "Yes" button for confirming that the user has COVID-19 now has the text "Confirm" instead.
