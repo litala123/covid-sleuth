@@ -178,7 +178,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
           'Subject' => $subject
         );
         
-        //$mail = $smtp->send($to, $headers, $body);
+        $mail = $smtp->send($to, $headers, $body);
         /* mail error checking
         if (PEAR::isError($mail)) {
             echo('<p>' . $mail->getMessage() . '</p>');
