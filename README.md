@@ -75,3 +75,10 @@ Essentially, the JSON is parsed into an array, and the latitudes and longitudes 
 
 Other minor change:
 - The "Yes" button for confirming that the user has COVID-19 now has the text "Confirm" instead.
+
+##### Safer SQL queries - Andrew L'Italien
+SQL queries that included PHP variables have been converted to prepared statements that are executed with execute(). This prevents any issues a user setting a variable to some malicious code and have that ruin the database.
+This change also fixes the problem of not being able to input data when the location has apostrophes in its name (this is the issue that occurred during the presentation when inputting data at the location "'87 Gym").
+
+Minor addition:
+The "finalupload.json" file used during the presentation is added to the repo in this commit.
