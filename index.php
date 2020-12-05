@@ -322,7 +322,12 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       <aside id="left_sidebar">
         <button id="location_button" onclick="location_display()">Locations</button>
         <button id="hotspot_button" onclick="hotspot_display()">Hotspots</button>
-        <button id="visited_button" onclick="visited_display()">Locations Visited</button>
+        <?php
+          if (phpCAS::isAuthenticated()) {
+            echo "<button id=\"visited_button\" onclick=\"visited_display()\">Locations Visited</button>";
+          }
+        ?>
+        
         <!-- These locations will be filled from a database -->
         <ul id="loc_list"></ul>
       </aside>
@@ -411,11 +416,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       ?>
     </div>
     
-    <div id="visited_from_db">
-      <!-- Locations from locations table will be echoed here so they can be accessed by JS
-           This element has display set to none so that it doesn't affect the layout -->
+    <?php
+      if (phpCAS::isAuthenticated()) {
+        echo "<div id=\"visited_from_db\">";
+        /* Locations from locations table will be echoed here so they can be accessed by JS
+           This element has display set to none so that it doesn't affect the layout */
       
-      <?php
+      
         $sql_stmt = $dbconn->prepare("SELECT * FROM locations_visited JOIN locations ON locations_visited.locationId=locations.id WHERE rcsID=:user ORDER BY `entryDate` DESC, `entryTime` DESC");
         $sql_stmt->bindValue(':user', $user, PDO::PARAM_STR);
         $sql_stmt->execute();
@@ -437,8 +444,9 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $locs = $locs . " ] }";
         
         echo $locs;
-      ?>
-    </div>
+        echo "</div>";
+      }
+    ?>
     
   </body>
 </html>

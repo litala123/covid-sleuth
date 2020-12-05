@@ -82,3 +82,8 @@ This change also fixes the problem of not being able to input data when the loca
 
 Minor addition:
 The "finalupload.json" file used during the presentation is added to the repo in this commit.
+
+##### Locations visited button visibility - Andrew L'Italien
+The "Locations Visited" button and the "#visited_from_db" element are only created when a user is logged into the site. 
+
+Also, the bug where the "I have COVID-19" button will create another "Confirm" button when there is already a "Confirm" button on the screen has been fixed.
