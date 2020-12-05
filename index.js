@@ -12,9 +12,9 @@ function logout()
 }
 
 function location_display() {
-  document.getElementById("location_button").style.backgroundColor = "#ff6666";
-  document.getElementById("hotspot_button").style.backgroundColor = "#e7e7e7";
-  document.getElementById("visited_button").style.backgroundColor = "#e7e7e7";
+  $("#location_button").css("background-color", "ff6666");
+  $("#hotspot_button").css("background-color", "e7e7e7");
+  $("#visited_button").css("background-color", "e7e7e7");
   
   $("#loc_list").empty();
   
@@ -29,9 +29,9 @@ function location_display() {
 }
 
 function hotspot_display() {
-  document.getElementById("location_button").style.backgroundColor = "#e7e7e7";
-  document.getElementById("hotspot_button").style.backgroundColor = "#ff6666";
-  document.getElementById("visited_button").style.backgroundColor = "#e7e7e7";
+  $("#location_button").css("background-color", "e7e7e7");
+  $("#hotspot_button").css("background-color", "ff6666");
+  $("#visited_button").css("background-color", "e7e7e7");
   
   $("#loc_list").empty();
   
@@ -47,9 +47,9 @@ function hotspot_display() {
 }
 
 function visited_display() {
-  document.getElementById("location_button").style.backgroundColor = "#e7e7e7";
-  document.getElementById("hotspot_button").style.backgroundColor = "#e7e7e7";
-  document.getElementById("visited_button").style.backgroundColor = "#ff6666";
+  $("#location_button").css("background-color", "e7e7e7");
+  $("#hotspot_button").css("background-color", "e7e7e7");
+  $("#visited_button").css("background-color", "ff6666");
   
   $("#loc_list").empty();
   
@@ -79,10 +79,12 @@ function visited_display() {
 }
 
 $("#covid_btn").click( function() {
-  $("#covid_form").append("<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>")
-  $("#covid_sure").click( function() {
-    alert("All people at risk are being notified.");
-  });
+  if(!$("#covid_sure").length) {
+    $("#covid_form").append("<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>")
+    $("#covid_sure").click( function() {
+      alert("All people at risk are being notified.");
+    });
+  }
 });
 
 // Initialize and add the map
