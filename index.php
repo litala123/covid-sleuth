@@ -51,20 +51,31 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         $user = strtolower(phpCAS::getUser());
         $locName = $_POST['loc_select'];
-        $result = $dbconn->query("SELECT * FROM locations WHERE locationName='$locName'");
-        $locID = $result->fetch();
+        
+        $sql_stmt = $dbconn->prepare("SELECT * FROM locations WHERE locationName=:locName ");
+        $sql_stmt->bindValue(':locName', $locName, PDO::PARAM_STR);
+        $sql_stmt->execute();
+        $locID = $sql_stmt->fetch();
         
         // string containing the information that the user is trying to add
         $loc_data = "(locationID, rcsID, entryDate, exitDate, entryTime, exitTime) VALUES (" . $locID['id'] . ", '$user', '" . $_POST['entry_date'] . "', '" . $_POST['exit_date'] . "', '" . $_POST['entry_time'] . "', '" . $_POST['exit_time'] . "')";
         
-        // gets all rows that have the same values as the one trying to be added
-        $sql = "SELECT * FROM locations_visited WHERE locationID=" . $locID['id'] . " AND rcsID='$user' AND entryDate='" . $_POST['entry_date'] . "' AND exitDate='" . $_POST['exit_date'] . "' AND entryTime='" . $_POST['entry_time'] . "' AND exitTime='" . $_POST['exit_time'] . "'";
-        $result = $dbconn->query($sql);
+        $sql_stmt = $dbconn->prepare("SELECT * FROM locations_visited WHERE locationID=:id AND rcsID=:user AND entryDate=:entry_date AND exitDate=:exit_date AND entryTime=:entry_time AND exitTime=:exit_time");
+        $sql_stmt->bindValue(':id', $locID['id'], PDO::PARAM_INT);
+        $sql_stmt->bindValue(':user', $user, PDO::PARAM_STR);
+        $sql_stmt->bindValue(':entry_date', $_POST['entry_date'], PDO::PARAM_STR);
+        $sql_stmt->bindValue(':exit_date', $_POST['exit_date'], PDO::PARAM_STR);
+        $sql_stmt->bindValue(':entry_time', $_POST['entry_time'], PDO::PARAM_STR);
+        $sql_stmt->bindValue(':exit_time', $_POST['exit_time'], PDO::PARAM_STR);
+        $sql_stmt->execute();
+        $result = $sql_stmt->fetchAll();
+        
+        
         
         // if the result isn't in the table already, add it
-        if(count($result->fetchAll()) == 0) {
-          $sql = "INSERT INTO locations_visited $loc_data";
-          $dbconn->query($sql);
+        if(count($result) == 0) {
+          $sql_stmt = $dbconn->prepare("INSERT INTO locations_visited $loc_data");
+          $sql_stmt->execute();
           // echo "Logged in: added data<br>";
           echo "<script>alert('Added data');</script>";
         } else {
@@ -113,12 +124,20 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       $yest = date(("yy-m-d"), time()-86400);
       
       // get all locations visited for everyone within last 24hrs
-      $sql = "SELECT * FROM locations_visited WHERE (locations_visited.entryDate > \"$yest\" || (locations_visited.entryDate=\"$yest\" && locations_visited.entryTime >= \"$currentTime\"))";
-      $rows = $dbconn->query($sql);
+      $sql_stmt = $dbconn->prepare("SELECT * FROM locations_visited WHERE (locations_visited.entryDate > :yest || (locations_visited.entryDate=:yest && locations_visited.entryTime >= :currentTime))");
+      $sql_stmt->bindParam(":yest", $yest, PDO::PARAM_STR);
+      $sql_stmt->bindParam(":currentTime", $currentTime, PDO::PARAM_STR);
+      $sql_stmt->execute();
+      $rows = $sql_stmt->fetchAll();
       
       // get all locations visited for current user within last 24hrs
-      $sql = "SELECT locationID FROM locations_visited WHERE (locations_visited.rcsID=\"$user\" && (locations_visited.entryDate > \"$yest\" || (locations_visited.entryDate = \"$yest\" && locations_visited.entryTime >= \"$currentTime\")))";
-      $results = $dbconn->query($sql);
+      $sql_stmt = $dbconn->prepare("SELECT locationID FROM locations_visited WHERE (locations_visited.rcsID=:user && (locations_visited.entryDate > :yest || (locations_visited.entryDate = :yest && locations_visited.entryTime >= :currentTime)))");
+      $sql_stmt->bindParam(":user", $user, PDO::PARAM_STR);
+      $sql_stmt->bindParam(":yest", $yest, PDO::PARAM_STR);
+      $sql_stmt->bindParam(":currentTime", $currentTime, PDO::PARAM_STR);
+      $sql_stmt->execute();
+      $results = $sql_stmt->fetchAll();
+      
       
       // puts results from above query in an array
       $locs_to_check = array();
@@ -393,12 +412,14 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
     
     <div id="visited_from_db">
-      <!-- Locatiosn from locations table will be echoed here so they can be accessed by JS
+      <!-- Locations from locations table will be echoed here so they can be accessed by JS
            This element has display set to none so that it doesn't affect the layout -->
       
       <?php
-        $sql = "SELECT * FROM locations_visited JOIN locations ON locations_visited.locationId=locations.id WHERE rcsID='" . $user . "' ORDER BY `entryDate` DESC, `entryTime` DESC";
-        $rows = $dbconn->query($sql);
+        $sql_stmt = $dbconn->prepare("SELECT * FROM locations_visited JOIN locations ON locations_visited.locationId=locations.id WHERE rcsID=:user ORDER BY `entryDate` DESC, `entryTime` DESC");
+        $sql_stmt->bindValue(':user', $user, PDO::PARAM_STR);
+        $sql_stmt->execute();
+        $rows = $sql_stmt->fetchAll();
         
         /*
             JSON format:
