@@ -94,3 +94,7 @@ The location input boxes for the dates and times have default values of the curr
 The "I have COVID-19" button now can show the "Confirm" button without causing the file upload section to be pushed down some pixels.
 
 "index.js" has more comments to explain code.
+
+##### Alerts relocated - Andrew L'Italien
+The alerts that used to pop up in the alert box are now shown in the right sidebar above the "I have COVID-19" button. The alerts used to show up before the page loaded which caused the user to see a blank white screen until clicking away the alert box, but now the messages are in an element on the page, so that won't be an issue.
+The element has a quick pulsing animation upon page load (done by changing the border width and padding with jQuery) to show the user that the message has appeared.
