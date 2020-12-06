@@ -1,6 +1,12 @@
 // calls this on first load
 location_display();
 
+// pulsing animation for the alert area, if it exists
+$("#alert_msg").animate({borderWidth: "5px", left: "-=10px", top: "-=10px", padding: "+=5px"}, 200);
+$("#alert_msg").animate({borderWidth: "0px", left: "+=10px", top: "+=10px", padding: "-=5px"}, 5);
+$("#alert_msg").animate({borderWidth: "5px", left: "-=10px", top: "-=10px", padding: "+=5px"}, 300);
+$("#alert_msg").animate({borderWidth: "0px", left: "+=10px", top: "+=10px", padding: "-=5px"}, 0);
+
 // go to the login page
 function login() {
   location.href = "login.php";
@@ -98,9 +104,6 @@ function visited_display() {
 // make the "Confirm" button appear when the "I have COVID-19" button is clicked
 $("#covid_btn").click( function() {
   $("#covid_sure").css("visibility", "visible");
-  $("#covid_sure").click( function() {
-    alert("All people at risk are being notified.");
-  });
 });
 
 // Initialize and add the map

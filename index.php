@@ -76,27 +76,21 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         if(count($result) == 0) {
           $sql_stmt = $dbconn->prepare("INSERT INTO locations_visited $loc_data");
           $sql_stmt->execute();
-          // echo "Logged in: added data<br>";
-          echo "<script>alert('Added data');</script>";
-        } else {
-          // echo "Result already in the table<br>";
-          // echo "<script>alert('Result already in the table');</script>";
+          echo "<div id=\"alert_msg\">Added data</div>";
         }
         
       } else {
         // the user wasn't logged in, so the data will not be added
-        // echo "Not logged in: did not add data<br>";
-        echo "<script>alert('Must be logged in to add data');</script>";
+        echo "<div id=\"alert_msg\">Must be logged in to add data</div>";
       }
     } else {
       // the date/time for exit was before the entry date/time
-      echo "<script>alert('Entry cannot be after exit');</script>";
+      echo "<div id=\"alert_msg\">Entry cannot be after exit</div>";
     }
     
   } else if (isset($_POST['right'])){
     // the inputs were not all filled
-    //echo "Not all inputs set (:{()>";
-    echo "<script>alert('Not all inputs set');</script>";
+    echo "<div id=\"alert_msg\">Not all inputs set</div>";
   }
   
   // I have COVID-19 button handling
@@ -186,100 +180,104 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo("<p>Message successfully sent to litala@rpi.edu!</p>");
         }*/
       }
+      echo "<div id=\"alert_msg\">All people at risk are being notified</div>";
       
     } else {
       // the user wasn't logged in, so no emails will be sent, no locations will become hotspots
-      // echo "Not logged in: did not add data<br>";
-      echo "<script>alert('Must be logged in to add data');</script>";
+      echo "<div id=\"alert_msg\">Must be logged in to add data</div>";
     }
     
   }
   
   // File upload handling
-  if(!isset($_POST['right']) && !isset($_POST['covid_sure']) && isset($_POST['file_upload']) && phpCAS::isAuthenticated()) {
-    $user = strtolower(phpCAS::getUser());
-    
-    $file = $_FILES['file'];
-    $file_name = $file['name'];
-    $file_ext = explode(".", $file_name);
-    $file_ext = end($file_ext);
-    
-    if(strtolower($file_ext) == "json") {
-      $file_content_string = file_get_contents($file['tmp_name']);
-      $json = json_decode($file_content_string, true);
+  if(!isset($_POST['right']) && !isset($_POST['covid_sure']) && isset($_POST['file_upload'])) {
+    if(phpCAS::isAuthenticated()) {
+      $user = strtolower(phpCAS::getUser());
       
-      $loc_data = $json['locations'];
+      $file = $_FILES['file'];
+      $file_name = $file['name'];
+      $file_ext = explode(".", $file_name);
+      $file_ext = end($file_ext);
       
-      $sql = "SELECT * FROM locations";
-      $db_locs = ($dbconn->query($sql))->fetchAll();
-      
-      $loc_list = array();
-      
-      // runs for each location in the file
-      // if the location is close enough to one of the RPI locations,
-      //    the location will be stored as being at that location
-      //    if it is not close to any RPI locations, it is ignored
-      for($i = 0; $i < count($loc_data); $i++) {
-        $lat = $loc_data[$i]['latitudeE7']/10000000;
-        $long = $loc_data[$i]['longitudeE7']/10000000;
-        for($j = 0; $j < count($db_locs); $j++) {
-          $d_lat = $db_locs[$j]['latitude'] - $lat;
-          $d_long = $db_locs[$j]['longitude'] - $long;
-          $dist = sqrt($d_lat*$d_lat + $d_long*$d_long);
-          
-          if($dist <= 0.00025) {
-            array_push($loc_list, array());
-            $loc_list[$i] = array($db_locs[$j], $loc_data[$i]['timestampMs']/1000);
-            break;
+      if(strtolower($file_ext) == "json") {
+        $file_content_string = file_get_contents($file['tmp_name']);
+        $json = json_decode($file_content_string, true);
+        
+        $loc_data = $json['locations'];
+        
+        $sql = "SELECT * FROM locations";
+        $db_locs = ($dbconn->query($sql))->fetchAll();
+        
+        $loc_list = array();
+        
+        // runs for each location in the file
+        // if the location is close enough to one of the RPI locations,
+        //    the location will be stored as being at that location
+        //    if it is not close to any RPI locations, it is ignored
+        for($i = 0; $i < count($loc_data); $i++) {
+          $lat = $loc_data[$i]['latitudeE7']/10000000;
+          $long = $loc_data[$i]['longitudeE7']/10000000;
+          for($j = 0; $j < count($db_locs); $j++) {
+            $d_lat = $db_locs[$j]['latitude'] - $lat;
+            $d_long = $db_locs[$j]['longitude'] - $long;
+            $dist = sqrt($d_lat*$d_lat + $d_long*$d_long);
+            
+            if($dist <= 0.00025) {
+              array_push($loc_list, array());
+              $loc_list[$i] = array($db_locs[$j], $loc_data[$i]['timestampMs']/1000);
+              break;
+            }
           }
         }
-      }
-      
-      // if locations at RPI were found in the location history
-      if(count($loc_list) != 0) {
         
-        // this section will fill an array with locationIDs and start and end times at the locations - it determines if two time periods overlap
-        $final_loc_list = array();
-        array_push($final_loc_list, array($loc_list[0][0]["id"], $loc_list[0][1]));
-        
-        $currentcounter = 0;
-        for($i = 1; $i < count($loc_list); $i++) {
-          if($loc_list[$i][0]["id"] != $loc_list[$i-1][0]["id"]) {
-            array_push($final_loc_list[$currentcounter], $loc_list[$i-1][1]);
-            $currentcounter++;
-            array_push($final_loc_list, array($loc_list[$i][0]["id"], $loc_list[$i][1]));
+        // if locations at RPI were found in the location history
+        if(count($loc_list) != 0) {
+          
+          // this section will fill an array with locationIDs and start and end times at the locations - it determines if two time periods overlap
+          $final_loc_list = array();
+          array_push($final_loc_list, array($loc_list[0][0]["id"], $loc_list[0][1]));
+          
+          $currentcounter = 0;
+          for($i = 1; $i < count($loc_list); $i++) {
+            if($loc_list[$i][0]["id"] != $loc_list[$i-1][0]["id"]) {
+              array_push($final_loc_list[$currentcounter], $loc_list[$i-1][1]);
+              $currentcounter++;
+              array_push($final_loc_list, array($loc_list[$i][0]["id"], $loc_list[$i][1]));
+            }
           }
-        }
-        array_push($final_loc_list[count($final_loc_list)-1], $loc_list[count($loc_list)-1][1]);
-        
-        /* final_loc_list breakdown
-        
-        [i] array of 3 items:
-          0 - location id                       use:    $final_loc_list[i][0]
-          1 - start time                          use:    $final_loc_list[i][1]
-          2 - end time                            use:    $final_loc_list[i][2]
-        
-        */
-        
-        // insert the locations into the locations_visited table
-        for($i = 0; $i < count($final_loc_list); $i++) {
+          array_push($final_loc_list[count($final_loc_list)-1], $loc_list[count($loc_list)-1][1]);
           
-          $locationID = $final_loc_list[$i][0];
-          $entryDate = date("yy-m-d", $final_loc_list[$i][1]);
-          $entryTime = date("H:i", $final_loc_list[$i][1]);
-          $exitDate = date("yy-m-d", $final_loc_list[$i][2]);
-          $exitTime = date("H:i", $final_loc_list[$i][2]);
+          /* final_loc_list breakdown
           
-          $sql = "INSERT INTO locations_visited (`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES ('$locationID', '$user', '$entryDate', '$exitDate', '$entryTime', '$exitTime')";
-          $dbconn->exec($sql);
+          [i] array of 3 items:
+            0 - location id                       use:    $final_loc_list[i][0]
+            1 - start time                          use:    $final_loc_list[i][1]
+            2 - end time                            use:    $final_loc_list[i][2]
+          
+          */
+          
+          // insert the locations into the locations_visited table
+          for($i = 0; $i < count($final_loc_list); $i++) {
+            
+            $locationID = $final_loc_list[$i][0];
+            $entryDate = date("yy-m-d", $final_loc_list[$i][1]);
+            $entryTime = date("H:i", $final_loc_list[$i][1]);
+            $exitDate = date("yy-m-d", $final_loc_list[$i][2]);
+            $exitTime = date("H:i", $final_loc_list[$i][2]);
+            
+            $sql = "INSERT INTO locations_visited (`locationID`, `rcsID`, `entryDate`, `exitDate`, `entryTime`, `exitTime`) VALUES ('$locationID', '$user', '$entryDate', '$exitDate', '$entryTime', '$exitTime')";
+            $dbconn->exec($sql);
+          }
+          echo "<div id=\"alert_msg\">Locations added to the database</div>";
+        } else {
+          echo "<div id=\"alert_msg\">No locations found in the JSON file</div>";
         }
+        
       } else {
-        echo "<script>alert(\"No locations found in the JSON file\");</script>";
+        echo "<div id=\"alert_msg\">Must be JSON file type</div>";
       }
-      
-      
     } else {
-      echo "<script>alert(\"Must be JSON file type\");</script>";
+      echo "<div id=\"alert_msg\">Must be logged in to add data</div>";
     }
     
   }
@@ -309,7 +307,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       COVID Sleuth
       <?php
       if (phpCAS::isAuthenticated()) {
-        // echo "User:" . phpCAS::getUser();
         $user = strtolower(phpCAS::getUser());
         echo "<span id='username'>" . $user . "</span>";
         echo "<button id='login' onclick='logout()'>Log Out</button>";
@@ -373,6 +370,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
           if (phpCAS::isAuthenticated())
           {
             echo "<button id=\"covid_btn\">I have COVID-19</button>";
+            echo "<form id=\"covid_form\" method=\"post\" action=\"index.php\">";
+            echo "<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>";
+            echo "</form>";
+          } else {
+            echo "<button id=\"covid_btn\" style='visibility:hidden'>I have COVID-19</button>";
             echo "<form id=\"covid_form\" method=\"post\" action=\"index.php\">";
             echo "<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>";
             echo "</form>";
@@ -460,6 +462,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "</div>";
       }
     ?>
+    
+    
     
   </body>
 </html>

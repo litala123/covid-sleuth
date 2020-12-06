@@ -179,7 +179,17 @@ li:hover {
   font-size: 75%;
 }
 
-
 #left_btn {
   display: none;
+}
+
+#alert_msg {
+  position: absolute;
+  left: 81vw;
+  top: 42vh;
+  z-index: 1;
+  width: 18vw;
+  max-width: 18vw;
+  font-size: 3.6vh;
+  border: solid rgb(85, 4, 4) 0px;
 }
