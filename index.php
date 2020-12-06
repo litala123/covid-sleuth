@@ -349,10 +349,22 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
               }
             ?>
           </select>
-          <input type="date" name="entry_date"></input>
-          <input type="time" name="entry_time"></input>
-          <input type="date" name="exit_date"></input>
-          <input type="time" name="exit_time"></input>
+          <input type="date" name="entry_date" value="<?php
+              if(isset($_POST['entry_date'])) echo $_POST['entry_date'];
+              else echo date("yy-m-d");
+            ?>"></input>
+          <input type="time" name="entry_time" value="<?php
+              if(isset($_POST['entry_time'])) echo $_POST['entry_time'];
+              else echo date("H:i");
+            ?>"></input>
+          <input type="date" name="exit_date" value="<?php
+              if(isset($_POST['exit_date'])) echo $_POST['exit_date'];
+              else echo date("yy-m-d");
+            ?>"></input>
+          <input type="time" name="exit_time" value="<?php
+              if(isset($_POST['exit_time'])) echo $_POST['exit_time'];
+              else echo date("H:i");
+            ?>"></input>
           <button class="rightBtn" id="input_data_button" name="right" onclick="">Add Location Data</button>
         </form>
         
@@ -362,6 +374,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
           {
             echo "<button id=\"covid_btn\">I have COVID-19</button>";
             echo "<form id=\"covid_form\" method=\"post\" action=\"index.php\">";
+            echo "<button name=\"covid_sure\" id=\"covid_sure\">Confirm</button>";
             echo "</form>";
           }
         ?>

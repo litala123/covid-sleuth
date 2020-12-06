@@ -120,6 +120,7 @@ body {
   background-color: #ff6666;
   border-radius: 6px;
   width: 95%;
+  visibility: hidden;
 }
 
 #right_sidebar section {
@@ -176,4 +177,9 @@ li:hover {
 
 .loc_time {
   font-size: 75%;
+}
+
+
+#left_btn {
+  display: none;
 }
