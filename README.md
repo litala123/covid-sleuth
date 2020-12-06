@@ -98,3 +98,7 @@ The "I have COVID-19" button now can show the "Confirm" button without causing t
 ##### Alerts relocated - Andrew L'Italien
 The alerts that used to pop up in the alert box are now shown in the right sidebar above the "I have COVID-19" button. The alerts used to show up before the page loaded which caused the user to see a blank white screen until clicking away the alert box, but now the messages are in an element on the page, so that won't be an issue.
 The element has a quick pulsing animation upon page load (done by changing the border width and padding with jQuery) to show the user that the message has appeared.
+
+##### Google Takeout Popup Info Box - Andrew L'Italien
+Users can now see directions for getting location data from Google Takeout and uploading it to the site. There is an info button in the bottom right corner of the screen with a ⓘ symbol in it. Clicking on it will create a popup in the middle of the screen with the instructions in it (including a picture). There is a close button at the top right of the popup to close it. The rest of the website (except the header) is dimmed and unclickable while the popup is open.
+The popup was modeled after the modal box found here: https://www.w3schools.com/howto/howto_css_modals.asp
