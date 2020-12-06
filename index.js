@@ -106,6 +106,18 @@ $("#covid_btn").click( function() {
   $("#covid_sure").css("visibility", "visible");
 });
 
+// create a popup to show users how to use Google Takeout to get their location history
+$("#takeout_info").click( function() {
+  $("#takeout_popup_outer").css("display", "block");
+  $("#takeout_popup").css("display", "block");
+  $("#popup_x").css("display", "block");
+  $("#popup_x").click( function() {
+    $("#takeout_popup_outer").css("display", "none");
+    $("#takeout_popup").css("display", "none");
+    $("#popup_x").css("display", "none");
+  });
+});
+
 // Initialize and add the map
 function initMap() {
   // The location of RPI

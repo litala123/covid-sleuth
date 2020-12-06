@@ -387,9 +387,25 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="file" name="file" id="input_file_button"></input>
             <input class="rightBtn" name="file_upload" type="submit"></input>
           </form>
+          <button id="takeout_info">ⓘ</button>
         </section>
       </aside>
     </section>
+    
+    <!-- Learned how to make popups at https://www.w3schools.com/howto/howto_css_modals.asp -->
+    <!-- This popup explains how to get location data from Google Maps to upload to the site -->
+    <div id="takeout_popup_outer">
+      <div id="takeout_popup">
+        <div id="popup_x">&times;</div>
+        If you use Google Maps, you can take that location data to this site to automatically add in locations that you have visited. In order to save this, go to the settings in your Google Maps app and make sure that you have location and location history on (they are not the same thing!) so that you can start collecting your location data.<br><br>
+        Once you have location data to upload, go to <a href="https://takeout.google.com/settings/takeout">https://takeout.google.com</a> and sign in with your Google account.<br><br>
+        Scroll down to location history and make sure that it is selected (nothing else has to be checked). Click on "Multiple formats," and make sure that the option for "Location History" is set to the "JSON" option and hit "OK."<br><br>
+        <img id="loc_hist_img"src="res/LocationHistory.jpg"><br><br>
+        Scroll down and click the "Next step" button. Scroll down again and click the "Create export" button. Wait for the export to finish (it shouldn't take long as long as Google says) and download when it is ready.<br><br>
+        This will download a .zip file. Open up that file, and right-click on the "Takeout" folder. Click "Extract all..." and choose whatever location you want the data to be extracted to. The files are ready!<br><br>
+        On this page, click on the file upload button, and navigate to the folder location with the extracted files. Go into the "Takeout" folder, and then the "Location History" folder. Choose the "Location History.json" file to submit. On this website, click the "Submit" button, and the data should be uploaded!
+      </div>
+    </div>
     
     <div id="locs_from_db">
       <!-- Locations from locations table will be echoed here so they can be accessed by JS
