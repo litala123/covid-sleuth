@@ -87,3 +87,10 @@ The "finalupload.json" file used during the presentation is added to the repo in
 The "Locations Visited" button and the "#visited_from_db" element are only created when a user is logged into the site. 
 
 Also, the bug where the "I have COVID-19" button will create another "Confirm" button when there is already a "Confirm" button on the screen has been fixed.
+
+##### Inputs saved with page reload - Andrew L'Italien
+The location input boxes for the dates and times have default values of the current date and time. If they are changed, they will stay that value until changed, even after clicking the "Add Location Data" button.
+
+The "I have COVID-19" button now can show the "Confirm" button without causing the file upload section to be pushed down some pixels.
+
+"index.js" has more comments to explain code.
